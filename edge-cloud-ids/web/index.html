@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edge-Cloud IDS</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1720'/%3E%3Cpath d='M16 5l9 4v7c0 5-4 9-9 11-5-2-9-6-9-11V9z' fill='none' stroke='%2335d0b4' stroke-width='2.4'/%3E%3C/svg%3E">
+<script>
+// Apply the saved preference before paint; storage may be blocked for local files.
+try { document.documentElement.dataset.theme = localStorage.getItem('ids-theme') === 'light' ? 'light' : 'dark'; }
+catch (_) { document.documentElement.dataset.theme = 'dark'; }
+</script>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<aside class="sidebar">
+<a href="#datasets" class="brand" aria-label="Edge-Cloud IDS home"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3l11 5v8c0 6-4.5 10.5-11 13C9.5 26.5 5 22 5 16V8z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 16 3 3 7-7" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><b>Edge / Cloud</b><span>INTRUSION INTELLIGENCE</span></div></a>
+<div class="nav-label">WORKSPACE</div><nav id="tabs" role="tablist" aria-label="Workspace pages"><button data-tab="datasets" role="tab" aria-selected="true" class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16M4 3v18M20 3v18"/></svg><span>Datasets</span><em>02</em></button><button data-tab="monitor" role="tab" aria-selected="false" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg><span>Live monitor</span></button><button data-tab="lab" role="tab" aria-selected="false" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4v16M12 4v16M19 4v16M2 8h6M9 16h6M16 10h6"/></svg><span>Threshold lab</span></button><button data-tab="bench" role="tab" aria-selected="false" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10h4v10M10 20V4h4v16M16 20v-7h4v7"/></svg><span>Benchmark</span></button><button data-tab="analyze" role="tab" aria-selected="false" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H5v18h14V8zM14 3v6h5M8 13h8M8 17h5"/></svg><span>Analyze flows</span></button><button data-tab="arch" role="tab" aria-selected="false" class=""><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v5H9zM2 16h6v5H2zM16 16h6v5h-6zM12 8v4M5 16v-4h14v4"/></svg><span>Architecture</span></button></nav>
+<div class="sidebar-bottom"><div class="system-tag"><i></i> RESEARCH EDITION</div><p>Small at the edge.<br>Intelligent everywhere.</p><div class="sidebar-foot">AIoT framework <span>v2.0</span></div></div>
+</aside>
+<div class="app-shell"><header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <b id="crumb">Datasets</b></div><div class="top-actions"><button class="btn" id="themeToggle" type="button" aria-label="Toggle dark theme" aria-pressed="true">Theme: Dark</button><span class="mode-label" id="modeLabel">Real datasets · seed 0</span><div class="pill" id="statusPill"><i></i><span>connecting…</span></div></div></header>
+<main>
+<div class="workspace-heading"><div><div class="eyebrow">EXPLORE / UNDERSTAND / EVALUATE</div><h1 id="workspaceTitle">Your data, in focus.</h1><p id="workspaceDescription">Two real-world datasets. Every flow, feature, and attack class within reach.</p></div><button class="btn" id="openGuide">Quick start <span aria-hidden="true">↗</span></button></div>
+<div id="connectionNotice" class="connection-notice" hidden><div><b>You're exploring the saved dataset snapshot.</b><p>The CSV previews and evaluation results are available offline. Start the Python server for live replay and classification.</p></div><button class="btn" id="retryConnection">Reconnect</button></div>
+<div id="banner" class="banner" hidden></div>
+<section id="tab-datasets" class="tab on">
+<div class="data-hero"><div><span class="hero-tag">REAL DATA / INCLUDED</span><h2>A stronger foundation <br>for every decision.</h2><p>Explore the traffic behind your edge-to-cloud models.</p></div><div class="hero-stats"><div><b id="totalRows">—</b><span>recorded flows</span></div><div><b>02</b><span>research datasets</span></div><div><b id="totalClasses">—</b><span>class labels across datasets</span></div></div></div>
+<div id="datasetCards" class="dataset-cards"></div>
+<div class="section-heading"><div><span class="eyebrow">DATASET EXPLORER</span><h2 id="explorerTitle">Edge-IIoTset</h2></div><div class="row"><button id="useDataset" class="btn">Use in monitor →</button><a id="downloadDataset" class="btn primary" download>↓ Download CSV</a></div></div>
+<div id="datasetFacts" class="dataset-facts"></div>
+<div class="explorer-grid"><div class="card distribution-card"><div class="card-heading"><h3>Traffic composition</h3><span class="small-chip">RAW CSV</span></div><div id="distributionSummary"></div><div id="distribution"></div></div>
+<div class="card preview-card"><div class="card-heading"><div><h3>Inside the dataset</h3><p class="note" id="previewNote"></p></div><span class="small-chip">REAL RECORDS</span></div><div class="preview-tools"><input id="previewSearch" type="search" placeholder="Search preview rows…" aria-label="Search preview rows"><select id="previewClass" aria-label="Filter preview by class"></select><label class="checkbox-label"><input id="allColumns" type="checkbox"> All columns</label></div><div class="tablewrap preview-scroll"><table id="datasetTable"></table></div><div class="preview-footer"><span id="previewCount"></span><div><button class="btn small" id="prevRows" aria-label="Previous rows">←</button><span id="previewPage"></span><button class="btn small" id="nextRows" aria-label="Next rows">→</button></div></div></div></div>
+<details class="card schema-card"><summary>Feature dictionary <span>Column names, types & missing values</span></summary><div class="tablewrap tall"><table id="dictionary"></table></div></details>
+<div class="dataset-provenance" id="datasetProvenance"></div>
+</section>
+<!-- ============================ MONITOR ============================ -->
+<section id="tab-monitor" class="tab">
+  <div class="controls card">
+    <div class="ctl"><label>Dataset</label><select id="cDataset"></select></div>
+    <div class="ctl"><label>Forwarding policy</label>
+      <div class="seg" id="cPolicy"><button data-v="A">A · uncertain only</button><button data-v="B">B · + attacks</button></div></div>
+    <div class="ctl grow"><label>Threshold τ <b id="tauVal"></b>
+      <span class="chk"><input type="checkbox" id="cAuto" checked><label for="cAuto">auto (τ*)</label></span></label>
+      <input type="range" id="cTau" min="0.3" max="0.999" step="0.005"></div>
+    <div class="ctl"><label>Round trip Δ <b id="deltaVal"></b></label>
+      <input type="range" id="cDelta" min="5" max="200" step="5"></div>
+    <div class="ctl"><label>Traffic</label>
+      <select id="cScenario"></select></div>
+    <div class="ctl"><label>Rate <b id="rateVal"></b></label><input type="range" id="cRate" min="5" max="300" step="5" value="40"></div>
+    <div class="ctl btns">
+      <button class="btn primary" id="bStream">Start stream</button>
+      <button class="btn warn" id="bBurst" title="8 s of attack-only traffic">Attack burst</button>
+      <button class="btn" id="bReset">Reset</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <div class="card"><h3>Gate decisions <small>last 250 flows · y = edge confidence c</small></h3>
+      <div class="legend"><span><i class="dot edge"></i>decided at edge</span><span><i class="dot cloud"></i>forwarded to cloud</span><span><i class="ring"></i>misclassified</span><span><i class="ln"></i>τ</span></div>
+      <svg id="scatter" class="chart" viewBox="0 0 720 260" preserveAspectRatio="none"></svg></div>
+    <div class="card"><h3>Latency per flow <small>mean, ms · Eq. (4)</small></h3>
+      <div id="latBars"></div>
+      <h3 style="margin-top:18px">Cloud traffic <small>share of flows crossing the WAN</small></h3>
+      <div id="trafBar"></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><h3>Alerts <small>non-benign final labels, newest first</small></h3>
+      <div class="tablewrap"><table id="alerts"><thead><tr><th>#</th><th>Final label</th><th>Edge said</th><th>c</th><th>Decided by</th><th>Truth</th><th>ms</th></tr></thead><tbody></tbody></table></div></div>
+    <div class="card"><h3>Traffic mix <small>final labels · hatched = forwarded</small></h3><div id="mix"></div></div>
+  </div>
+</section>
+
+<!-- ============================ LAB ============================ -->
+<section id="tab-lab" class="tab">
+  <div class="card intro">
+    <h2>Choose an operating point</h2>
+    <p>The forwarding threshold τ is the control variable. Everything below is computed on the held-out test split for the dataset and Δ selected on the Live monitor tab. The curve is steep below the knee and flat above it; τ* is the smallest forwarded share whose <em>validation</em> macro-F1 stays within ε = 0.005 of Cloud-Only (Eq. 6).</p>
+    <div class="row"><label>Dataset <select id="labDataset"></select></label>
+      <label>Δ <select id="labDelta"><option>20</option><option selected>50</option><option>100</option></select> ms</label>
+      <label class="chk" style="display:inline-flex;gap:6px"><input type="checkbox" id="labZoom"> zoom to Policy A range</label>
+      <span id="labNote" class="note"></span></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Macro-F1 vs share forwarded <small>% · Fig. 3</small></h3><svg id="chF1" class="chart" viewBox="0 0 560 330"></svg></div>
+    <div class="card"><h3>Mean latency vs τ <small>ms · Fig. 4</small></h3><svg id="chLat" class="chart" viewBox="0 0 560 330"></svg></div>
+  </div>
+  <div class="card"><h3>Operating points <small>click a row to apply it on the monitor</small></h3>
+    <div class="tablewrap"><table id="labTable"><thead><tr><th>τ</th><th class="num">A · F1</th><th class="num">A · fwd %</th><th class="num">A · latency ms</th><th class="num">B · F1</th><th class="num">B · fwd %</th><th class="num">B · latency ms</th></tr></thead><tbody></tbody></table></div></div>
+</section>
+
+<!-- ============================ BENCH ============================ -->
+<section id="tab-bench" class="tab">
+  <div id="benchBody"></div>
+</section>
+
+<!-- ============================ ANALYZE ============================ -->
+<section id="tab-analyze" class="tab">
+  <div class="grid2">
+    <div class="card">
+      <h3>Classify flows <small>uses the dataset, policy, τ and Δ currently set on the monitor</small></h3>
+      <p class="note">Original dataset sources: <a href="https://ieee-dataport.org/8939" target="_blank" rel="noopener">Edge-IIoTset source ↗</a> · <a href="https://research.unsw.edu.au/projects/toniot-datasets" target="_blank" rel="noopener">TON_IoT source ↗</a>. Models are trained on the real CSVs; uploads are classified with them and are not added to training.</p>
+      <p class="muted">Upload a CSV with the dataset's raw columns (see schema), or load example flows and edit the JSON.</p>
+      <div class="row"><label class="btn file">Upload CSV<input type="file" id="fCsv" accept=".csv,text/csv" hidden></label>
+        <button class="btn" id="bSample">Load 5 example flows</button>
+        <button class="btn" id="bSchema">Show schema</button></div>
+      <textarea id="jsonIn" spellcheck="false" placeholder='[{"proto": "tcp", "duration": 0.3, …}]'></textarea>
+      <div class="row"><button class="btn primary" id="bClassify">Classify JSON</button><span id="anaMsg" class="note"></span></div>
+    </div>
+    <div class="card"><h3>Result <small id="anaSummary"></small></h3>
+      <div class="tablewrap tall"><table id="anaTable"><thead><tr><th>#</th><th>Label</th><th>Edge</th><th>c</th><th>By</th><th>Truth</th><th></th></tr></thead><tbody></tbody></table></div>
+      <pre id="schemaOut" hidden></pre></div>
+  </div>
+</section>
+
+<!-- ============================ ARCH ============================ -->
+<section id="tab-arch" class="tab"><div id="archBody"></div></section>
+</main>
+<footer>Independent research implementation · Real CSV data · Seed-0 evaluation · WAN delay and INT8 quantization are simulated</footer></div>
+<dialog id="startupGuide"><form method="dialog"><button class="dialog-close" aria-label="Close guide">×</button></form><span class="eyebrow">GET STARTED</span><h2>Your workspace. Two ways to explore.</h2><h3>Browse immediately</h3><p>Open <code>OPEN_DASHBOARD.html</code> in the extracted project folder. Browse real dataset previews, download CSVs, and explore saved evaluation results without Python.</p><h3>Run the full application</h3><p>Double-click <code>START_WINDOWS.cmd</code> on Windows, or run <code>python3 launch.py</code> on macOS / Linux. The launcher sets up a local environment and opens your browser.</p><p class="note">Live replay and new flow classification require the server. Leave its terminal open while using these features.</p><button class="btn primary" id="closeGuide">Got it</button></dialog>
+<div id="toast" role="status" hidden></div>
+<script src="/static/snapshot.js"></script>
+<script src="/static/app.js"></script>
+<script src="/static/datasets.js"></script>
+</body></html>
