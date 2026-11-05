@@ -1,0 +1,14 @@
+[
+  {
+    "path": "data/edge_iiotset/ML-EdgeIIoT-dataset.csv",
+    "sha256": "53101fad091af20bee815860962a5016b802ee45d456a141042f6183094c3c1a",
+    "bytes": 82184390,
+    "source": "User-uploaded research dataset"
+  },
+  {
+    "path": "data/ton_iot/train_test_network.csv",
+    "sha256": "26ddc513552de36de6428b2e578efaed2b57504c716dfba847cc0109a64e1974",
+    "bytes": 29902775,
+    "source": "User-uploaded research dataset"
+  }
+]
