@@ -1,0 +1,11 @@
+# Two-tier deployment: the gateway talks to the cloud model over real HTTP.
+services:
+  cloud:
+    build: .
+    command: uvicorn service.cloud:app --host 0.0.0.0 --port 8001
+  gateway:
+    build: .
+    command: uvicorn service.app:app --host 0.0.0.0 --port 8000
+    environment: { CLOUD_URL: "http://cloud:8001" }
+    ports: ["8000:8000"]
+    depends_on: [cloud]
