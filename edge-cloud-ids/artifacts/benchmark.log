@@ -1,0 +1,52 @@
+[06:10:15] Edge-IIoTset: 156,986 de-duplicated flows, 15 classes, source=real
+[06:10:17] preprocessing: 45 full / 27 edge features; dropped identifiers: []
+[06:11:43] edge MLP trained in 86.5s  (17.5 KB fp32 / 5.1 KB int8)
+[06:12:14] cloud model: {'xgb_val_f1': 0.924782088287199, 'xgb_secs': 31.2, 'selected': 'xgboost'}  (31.3s)
+[06:12:16] done in 123.4s | cloud F1 92.01 | A@0.6: F1 91.77, fwd 8.6% | B@0.5: F1 92.01, fwd 84.5%
+[06:12:18] Edge-IIoTset: 156,986 de-duplicated flows, 15 classes, source=real
+[06:12:20] preprocessing: 45 full / 27 edge features; dropped identifiers: []
+[06:13:25] edge MLP trained in 65.5s  (17.5 KB fp32 / 5.1 KB int8)
+[06:13:48] cloud model: {'xgb_val_f1': 0.9252661247435892, 'xgb_secs': 23.1, 'selected': 'xgboost'}  (23.1s)
+[06:13:50] done in 93.4s | cloud F1 92.20 | A@0.7: F1 91.89, fwd 10.2% | B@0.5: F1 92.20, fwd 84.5%
+[06:13:52] Edge-IIoTset: 156,986 de-duplicated flows, 15 classes, source=real
+[06:13:53] preprocessing: 44 full / 27 edge features; dropped identifiers: []
+[06:15:10] edge MLP trained in 76.7s  (17.5 KB fp32 / 5.1 KB int8)
+[06:15:36] cloud model: {'xgb_val_f1': 0.922013513388108, 'xgb_secs': 26.5, 'selected': 'xgboost'}  (26.5s)
+[06:15:38] done in 108.1s | cloud F1 92.26 | A@0.5: F1 91.87, fwd 5.4% | B@0.5: F1 92.26, fwd 84.5%
+[06:15:40] Edge-IIoTset: 156,986 de-duplicated flows, 15 classes, source=real
+[06:15:41] preprocessing: 47 full / 27 edge features; dropped identifiers: []
+[06:17:20] edge MLP trained in 99.0s  (17.5 KB fp32 / 5.1 KB int8)
+[06:17:43] cloud model: {'xgb_val_f1': 0.9200037146327497, 'xgb_secs': 23.3, 'selected': 'xgboost'}  (23.3s)
+[06:17:45] done in 127.2s | cloud F1 92.17 | A@0.5: F1 91.69, fwd 7.4% | B@0.5: F1 92.17, fwd 84.5%
+[06:17:47] Edge-IIoTset: 156,986 de-duplicated flows, 15 classes, source=real
+[06:17:48] preprocessing: 46 full / 27 edge features; dropped identifiers: []
+[06:19:12] edge MLP trained in 83.6s  (17.5 KB fp32 / 5.1 KB int8)
+[06:19:35] cloud model: {'xgb_val_f1': 0.9213602629851049, 'xgb_secs': 23.2, 'selected': 'xgboost'}  (23.2s)
+[06:19:37] done in 111.7s | cloud F1 91.97 | A@0.6: F1 91.51, fwd 8.4% | B@0.5: F1 91.97, fwd 84.5%
+benchmark for edge_iiotset written to /home/claude/work/studio/edge-cloud-ids/artifacts/benchmark.json
+[06:19:38] TON_IoT: 190,474 de-duplicated flows, 10 classes, source=real
+[06:19:41] preprocessing: 119 full / 30 edge features; dropped identifiers: []
+[06:22:07] edge MLP trained in 146.2s  (17.6 KB fp32 / 5.1 KB int8)
+[06:22:47] cloud model: {'xgb_val_f1': 0.9684182207148867, 'xgb_secs': 40.4, 'selected': 'xgboost'}  (40.4s)
+[06:22:50] done in 193.0s | cloud F1 96.85 | A@0.6: F1 96.30, fwd 0.9% | B@0.5: F1 96.72, fwd 77.9%
+[06:22:51] TON_IoT: 190,474 de-duplicated flows, 10 classes, source=real
+[06:22:54] preprocessing: 125 full / 30 edge features; dropped identifiers: []
+[06:24:58] edge MLP trained in 123.6s  (17.6 KB fp32 / 5.1 KB int8)
+[06:25:38] cloud model: {'xgb_val_f1': 0.9674953304159768, 'xgb_secs': 40.0, 'selected': 'xgboost'}  (40.0s)
+[06:25:40] done in 170.2s | cloud F1 96.84 | A@0.7: F1 96.32, fwd 3.3% | B@0.5: F1 96.67, fwd 78.1%
+[06:25:41] TON_IoT: 190,474 de-duplicated flows, 10 classes, source=real
+[06:25:44] preprocessing: 124 full / 30 edge features; dropped identifiers: []
+[06:27:48] edge MLP trained in 123.4s  (17.6 KB fp32 / 5.1 KB int8)
+[06:28:27] cloud model: {'xgb_val_f1': 0.968780421864536, 'xgb_secs': 39.8, 'selected': 'xgboost'}  (39.8s)
+[06:28:30] done in 169.7s | cloud F1 97.00 | A@0.9: F1 96.70, fwd 5.6% | B@0.5: F1 96.92, fwd 78.1%
+[06:28:31] TON_IoT: 190,474 de-duplicated flows, 10 classes, source=real
+[06:28:34] preprocessing: 125 full / 30 edge features; dropped identifiers: []
+[06:29:50] edge MLP trained in 76.1s  (17.6 KB fp32 / 5.1 KB int8)
+[06:30:30] cloud model: {'xgb_val_f1': 0.9665763171702739, 'xgb_secs': 39.9, 'selected': 'xgboost'}  (39.9s)
+[06:30:32] done in 122.2s | cloud F1 96.84 | A@0.8: F1 96.34, fwd 3.6% | B@0.5: F1 96.52, fwd 77.9%
+[06:30:33] TON_IoT: 190,474 de-duplicated flows, 10 classes, source=real
+[06:30:36] preprocessing: 127 full / 30 edge features; dropped identifiers: []
+[06:31:36] edge MLP trained in 60.2s  (17.6 KB fp32 / 5.1 KB int8)
+[06:32:19] cloud model: {'xgb_val_f1': 0.9630586337649858, 'xgb_secs': 42.3, 'selected': 'xgboost'}  (42.3s)
+[06:32:21] done in 108.7s | cloud F1 96.68 | A@0.9: F1 96.49, fwd 5.5% | B@0.5: F1 96.28, fwd 77.8%
+benchmark for ton_iot written to /home/claude/work/studio/edge-cloud-ids/artifacts/benchmark.json

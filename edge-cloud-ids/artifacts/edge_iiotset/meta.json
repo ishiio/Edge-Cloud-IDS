@@ -1,0 +1,36 @@
+{
+  "dataset": "edge_iiotset",
+  "title": "Edge-IIoTset",
+  "classes": [
+    "Normal",
+    "DDoS_UDP",
+    "DDoS_ICMP",
+    "SQL_injection",
+    "Vulnerability_scanner",
+    "DDoS_TCP",
+    "Password",
+    "Port_Scanning",
+    "DDoS_HTTP",
+    "Uploading",
+    "Backdoor",
+    "XSS",
+    "Ransomware",
+    "MITM",
+    "Fingerprinting"
+  ],
+  "benign": "Normal",
+  "benign_idx": 0,
+  "temperature": 1.036413555941797,
+  "le_ms": 0.011849500026528403,
+  "lc_ms": 0.6857254999772522,
+  "tau_star": {
+    "A": 0.6,
+    "B": 0.5
+  },
+  "source": "real",
+  "edge_size_kb_int8": 5.144,
+  "edge_size_kb_fp32": 17.468,
+  "cloud_kind": "xgboost",
+  "n_full_features": 45,
+  "n_edge_features": 27
+}

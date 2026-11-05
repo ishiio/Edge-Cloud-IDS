@@ -1,0 +1,31 @@
+{
+  "dataset": "ton_iot",
+  "title": "TON_IoT",
+  "classes": [
+    "normal",
+    "backdoor",
+    "ddos",
+    "dos",
+    "injection",
+    "mitm",
+    "password",
+    "ransomware",
+    "scanning",
+    "xss"
+  ],
+  "benign": "normal",
+  "benign_idx": 0,
+  "temperature": 0.9302963524861797,
+  "le_ms": 0.01733400006287411,
+  "lc_ms": 0.6451985000239802,
+  "tau_star": {
+    "A": 0.6,
+    "B": 0.5
+  },
+  "source": "real",
+  "edge_size_kb_int8": 5.136,
+  "edge_size_kb_fp32": 17.576,
+  "cloud_kind": "xgboost",
+  "n_full_features": 119,
+  "n_edge_features": 30
+}

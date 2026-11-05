@@ -1,0 +1,12 @@
+[18:13:20] Edge-IIoTset: 59,990 de-duplicated flows, 15 classes, source=synthetic
+[18:13:21] preprocessing: 44 full / 27 edge features; dropped identifiers: ['ts', 'src_ip', 'dst_ip']
+[18:13:59] edge MLP trained in 37.8s  (17.5 KB fp32 / 4.7 KB int8)
+[18:14:24] cloud model: {'xgb_val_f1': 0.8477674385305624, 'xgb_secs': 24.8, 'selected': 'xgboost'}  (24.8s)
+[18:14:25] done in 66.1s | cloud F1 83.90 | A@0.6: F1 83.60, fwd 17.3% | B@0.5: F1 83.85, fwd 84.3%
+[18:14:25] artifacts saved to /home/claude/edge-cloud-ids/artifacts/edge_iiotset
+[18:14:26] TON_IoT: 70,000 de-duplicated flows, 10 classes, source=synthetic
+[18:14:28] preprocessing: 43 full / 30 edge features; dropped identifiers: []
+[18:15:10] edge MLP trained in 42.5s  (17.6 KB fp32 / 4.7 KB int8)
+[18:15:30] cloud model: {'xgb_val_f1': 0.9237811914336787, 'xgb_secs': 19.9, 'selected': 'xgboost'}  (19.9s)
+[18:15:31] done in 65.8s | cloud F1 91.99 | A@0.8: F1 91.96, fwd 14.8% | B@0.5: F1 91.94, fwd 87.2%
+[18:15:31] artifacts saved to /home/claude/edge-cloud-ids/artifacts/ton_iot
