@@ -1,0 +1,40 @@
+EDGE / CLOUD — RESEARCH WORKSPACE
+
+1. Extract the ENTIRE ZIP before opening anything.
+
+2. Browse immediately: double-click OPEN_DASHBOARD.html.
+   Both real datasets, representative CSV previews, class distributions,
+   feature dictionaries, saved benchmark results, and threshold curves
+   are available without Python. Full CSV download links use the data
+   folder in this extracted archive. Keep the folder structure intact.
+
+3. Live replay and classification:
+   Windows: double-click START_WINDOWS.cmd (requires Python 3.11+).
+   macOS/Linux: run python3 launch.py in this folder (Python 3.11+).
+   First launch installs dependencies and needs an internet connection.
+   The browser opens automatically when the server is ready.
+   Keep the terminal open. Press Ctrl+C to stop.
+
+Manual startup:
+   python -m pip install -r requirements.txt
+   python -m service.run
+   Open http://127.0.0.1:8000/#datasets
+
+The offline dashboard shows SAVED results, never live inference.
+The dataset preview contains up to five real source rows per class.
+Use Download CSV to get the full file.
+
+Evaluation: real data; deployed models are seed 0, the Benchmark page shows the five-seed mean ± std.
+This is an independent implementation, not a verified paper reproduction. WAN delay and INT8 are simulated.
+
+APPEARANCE: Dark mode is the default. Click Theme: Dark in the top bar
+to switch to light mode. Your browser saves your preference when available.
+
+Windows cloud-model compatibility fix
+-------------------------------------
+Both bundled XGBoost cloud models now use native cloud.json files instead of
+cloud.joblib memory snapshots. This avoids the XGBoost pickle-restore path
+that raised "input stream corrupted" on Windows. No retraining is needed.
+The launcher checks all models before starting the server.
+Extract this updated ZIP into a NEW folder and run START_WINDOWS.cmd.
+The dark/light theme switch and both real datasets are included.
