@@ -2,6 +2,8 @@ const snapshot = window.IDS_SNAPSHOT;
 const catalog = snapshot.catalog;
 let selectedDataset = Object.keys(catalog)[0], previewPage = 0;
 const number = n => Number(n).toLocaleString();
+const PALETTE=['#ff6b86','#ffb454','#ffd75e','#a384ff','#4fd8ff','#ff6ec7','#5b9dff','#b6e354','#ff8a5b','#7ee0a8','#d38bff','#5fe0e0','#f5a3c7','#9ab0ff','#e6c36a'];
+const classColor=(d,label)=>{if(label===d.benign)return '#2de2c0';const ks=Object.keys(d.class_counts).filter(k=>k!==d.benign);return PALETTE[Math.max(0,ks.indexOf(label))%PALETTE.length];};
 const copyByTab={datasets:['Your data, in focus.','Two real-world datasets. Every flow, feature, and attack class within reach.'],monitor:['See every decision.','Replay held-out traffic through the edge-to-cloud inference pipeline.'],lab:['Find your balance.','Explore detection quality, cloud traffic, and latency at each threshold.'],bench:['Evidence, at a glance.','Compare saved test-set results from the real datasets.'],analyze:['Look closer at a flow.','Classify your records with the trained edge and cloud models.'],arch:['Intelligence, connected.','Follow the path from a recorded flow to its final decision.']};
 function setPageHeading(key){const t=copyByTab[key];if(!t)return;$('#workspaceTitle').textContent=t[0];$('#workspaceDescription').textContent=t[1];$('#crumb').textContent=$(`#tabs button[data-tab="${key}"] span`).textContent;$$('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===key)));}
 $$('#tabs button').forEach(b=>b.addEventListener('click',()=>setPageHeading(b.dataset.tab)));
@@ -22,7 +24,7 @@ function renderDatasets(){
  const benign=d.class_counts[d.benign], attacks=d.rows-benign, attackPct=100*attacks/d.rows;
  $('#distributionSummary').innerHTML=`<div class="composition-overview"><div class="donut" style="--attack:${attackPct}%"><div><b>${attackPct.toFixed(1)}<small>%</small></b><span>attack records</span></div></div><div class="composition-legend"><span><i class="dot cloud"></i>Attack <b>${number(attacks)}</b></span><span><i class="dot edge"></i>Benign <b>${number(benign)}</b></span></div></div>`;
  const mx=Math.max(...Object.values(d.class_counts));
- $('#distribution').innerHTML=Object.entries(d.class_counts).map(([label,n])=>`<button class="class-row" data-class="${esc(label)}" title="Filter preview: ${esc(label)}"><span>${esc(label.replaceAll('_',' '))}</span><b>${number(n)}</b><div><i style="width:${100*n/mx}%;background:${label===d.benign?'var(--edge)':'var(--cloud)'}"></i></div></button>`).join('');
+ $('#distribution').innerHTML=Object.entries(d.class_counts).map(([label,n])=>`<button class="class-row" style="--cc:${classColor(d,label)}" data-class="${esc(label)}" title="Filter preview: ${esc(label)}"><span>${esc(label.replaceAll('_',' '))}</span><b>${number(n)}</b><div><i style="width:${100*n/mx}%;background:${classColor(d,label)}"></i></div></button>`).join('');
  $('#previewClass').innerHTML='<option value="">All classes</option>'+Object.keys(d.class_counts).map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
  $$('[data-class]').forEach(b=>b.onclick=()=>{$('#previewClass').value=b.dataset.class;previewPage=0;renderPreview();});
  $('#previewNote').textContent=`Representative preview · up to 5 source rows per class · ${d.columns.length} columns available`;
@@ -33,7 +35,7 @@ function renderDatasets(){
 function renderPreview(){const d=catalog[selectedDataset],q=$('#previewSearch').value.toLowerCase(),cl=$('#previewClass').value;
  const rows=d.preview.filter(r=>(!cl||r[d.label]===cl)&&(!q||Object.values(r).some(v=>String(v??'').toLowerCase().includes(q))));const pages=Math.max(1,Math.ceil(rows.length/10));previewPage=Math.min(previewPage,pages-1);
  const cols=$('#allColumns').checked?d.columns:d.columns.slice(0,7);
- $('#datasetTable').innerHTML='<thead><tr>'+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'</tr></thead><tbody>'+rows.slice(previewPage*10,previewPage*10+10).map(r=>'<tr>'+cols.map(c=>`<td title="${esc(r[c])}">${c===d.label?`<span class="tag ${r[c]===d.benign?'ok':'bad'}">${esc(r[c])}</span>`:esc(r[c]??'—')}</td>`).join('')+'</tr>').join('')+(!rows.length?`<tr><td colspan="${cols.length}" class="empty">No preview rows match this filter.</td></tr>`:'')+'</tbody>';
+ $('#datasetTable').innerHTML='<thead><tr>'+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'</tr></thead><tbody>'+rows.slice(previewPage*10,previewPage*10+10).map(r=>'<tr>'+cols.map(c=>`<td title="${esc(r[c])}">${c===d.label?`<span class="tag ${r[c]===d.benign?'ok':'bad'}" style="--tc:${classColor(d,r[c])}">${esc(r[c])}</span>`:esc(r[c]??'—')}</td>`).join('')+'</tr>').join('')+(!rows.length?`<tr><td colspan="${cols.length}" class="empty">No preview rows match this filter.</td></tr>`:'')+'</tbody>';
  $('#previewCount').textContent=`${rows.length?previewPage*10+1:0}–${Math.min((previewPage+1)*10,rows.length)} of ${rows.length} preview rows`;
  $('#previewPage').textContent=` ${previewPage+1} / ${pages} `;$('#prevRows').disabled=previewPage===0;$('#nextRows').disabled=previewPage===pages-1;
 }
